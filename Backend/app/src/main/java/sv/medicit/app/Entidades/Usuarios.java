@@ -15,9 +15,6 @@ import jakarta.persistence.TemporalType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.JoinTable;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
