@@ -32,7 +32,7 @@ public class Permisos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_permiso")
-    private int idPermiso;
+    private Integer idPermiso;
 
     @Column(name = "nombre_permiso", length = 30, nullable = false)
     private String estado;

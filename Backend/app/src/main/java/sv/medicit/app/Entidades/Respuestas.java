@@ -28,7 +28,7 @@ public class Respuestas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_respuesta")
-    private int idRespuesta;
+    private Integer idRespuesta;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id_usuario", nullable = false)

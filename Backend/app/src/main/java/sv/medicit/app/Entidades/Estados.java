@@ -33,7 +33,7 @@ public class Estados {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_estado")
-    private int idEstado;
+    private Integer idEstado;
 
     @Column(name = "estado", length = 15, nullable = false)
     private String estado;

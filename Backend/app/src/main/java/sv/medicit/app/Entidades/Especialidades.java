@@ -32,7 +32,7 @@ public class Especialidades {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_especialidad")
-    private int idEspecialidad;
+    private Integer idEspecialidad;
 
     @Column(name = "nombre_especialidad", length = 40, nullable = false)
     private String estado;

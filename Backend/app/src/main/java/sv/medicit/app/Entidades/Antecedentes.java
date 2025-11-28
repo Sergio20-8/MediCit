@@ -30,7 +30,7 @@ public class Antecedentes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_antecedente")
-    private int idAntecedente;
+    private Integer idAntecedente;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id_usuario", nullable = false)

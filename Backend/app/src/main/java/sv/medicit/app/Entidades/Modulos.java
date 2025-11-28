@@ -32,7 +32,7 @@ public class Modulos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_modulo")
-    private int idModulo;
+    private Integer idModulo;
 
     @Column(name = "nombre_modulo", length = 30, nullable = false)
     private String estado;

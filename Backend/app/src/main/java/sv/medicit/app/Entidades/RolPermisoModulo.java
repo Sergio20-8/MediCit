@@ -29,7 +29,7 @@ public class RolPermisoModulo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_rol_permiso_modulo")
-    private int idRolPermisoModulo;
+    private Integer idRolPermisoModulo;
 
     // Relación ManyToOne con Roles
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,7 +41,7 @@ public class RolPermisoModulo {
     @JoinColumn(name = "id_permiso", referencedColumnName = "id_permiso", nullable = false)
     private Permisos permiso;
 
-    
+
     // Relación ManyToOne con Modulos
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo", nullable = false)
