@@ -46,4 +46,10 @@ public class Estados {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Usuarios> usuarios;
+
+    // Relación inversa (opcional) - lista de usuarios que referencian este estado
+    @OneToMany(mappedBy = "estado", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Citas> citas;
 }
