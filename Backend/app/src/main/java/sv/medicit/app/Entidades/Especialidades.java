@@ -28,6 +28,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Especialidades {
 
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_especialidad")

@@ -41,6 +41,7 @@ public class RolPermisoModulo {
     @JoinColumn(name = "id_permiso", referencedColumnName = "id_permiso", nullable = false)
     private Permisos permiso;
 
+    
     // Relación ManyToOne con Modulos
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo", nullable = false)

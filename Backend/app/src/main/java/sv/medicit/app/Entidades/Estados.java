@@ -29,6 +29,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Estados {
 
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_estado")
