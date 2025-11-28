@@ -62,4 +62,13 @@ public class Usuarios {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
     private Estados estado;
+
+    // Relación ManyToMany con Especialidades (lado propietario)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "Usuario_Especialidad",
+        joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"),
+        inverseJoinColumns = @JoinColumn(name = "id_especialidad", referencedColumnName = "id_especialidad")
+    )
+    private List<Especialidades> especialidades;
 }
