@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import sv.medicit.app.Entidades.Usuarios;
 import sv.medicit.app.Servicios.UsuariosService;
+import sv.medicit.app.DTOs.UsuarioCreacionDTO;
 
 /**
  * RestController para la gestión de Usuarios.
@@ -56,6 +57,28 @@ public class UsuariosRestController {
     public ResponseEntity<?> crear(@RequestBody Usuarios usuario) {
         try {
             Usuarios usuarioCreado = usuariosService.crear(usuario);
+            return new ResponseEntity<>(usuarioCreado, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(
+                new ErrorResponse("Validación fallida", e.getMessage()),
+                HttpStatus.BAD_REQUEST
+            );
+        } catch (Exception e) {
+            return new ResponseEntity<>(
+                new ErrorResponse("Error", e.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+    }
+
+    /**
+     * POST /api/usuarios/completo
+     * Crear un nuevo usuario con contraseña, teléfono, correo y preguntas/respuestas.
+     */
+    @PostMapping("/completo")
+    public ResponseEntity<?> crearCompleto(@RequestBody UsuarioCreacionDTO usuarioDTO) {
+        try {
+            Usuarios usuarioCreado = usuariosService.crearUsuarioCompleto(usuarioDTO);
             return new ResponseEntity<>(usuarioCreado, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(
