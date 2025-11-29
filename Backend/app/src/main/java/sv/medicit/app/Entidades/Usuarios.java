@@ -60,19 +60,19 @@ public class Usuarios {
     private Date fechaNacimiento;
 
      
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_rol", referencedColumnName = "id_rol", nullable = false)
     @JsonManagedReference
     private Roles rol;
 
     // Relación ManyToOne con Estados. La columna en la tabla usuarios se llama `id_estado` y guarda el id (id_estado)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
     @JsonManagedReference
     private Estados estado;
 
     // Relación ManyToMany con Especialidades (lado propietario)
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "Usuario_especialidad",
         joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"),

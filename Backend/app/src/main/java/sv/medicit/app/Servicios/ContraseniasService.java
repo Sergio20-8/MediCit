@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import sv.medicit.app.Entidades.Contrasenias;
 import sv.medicit.app.Repositorios.ContraseniasRepository;
+import sv.medicit.app.Utilidades.EncriptacionUtil;
 
 /**
  * Servicio para la lógica de negocio de Contrasenias.
@@ -18,6 +19,9 @@ public class ContraseniasService {
 
     @Autowired
     private ContraseniasRepository contraseniasRepository;
+
+    @Autowired
+    private EncriptacionUtil encriptacionUtil;
 
     /**
      * Obtener todas las contraseñas.
@@ -34,7 +38,7 @@ public class ContraseniasService {
     }
 
     /**
-     * Crear una nueva contraseña.
+     * Crear una nueva contraseña (encriptada).
      */
     public Contrasenias crear(Contrasenias contrasenia) {
         if (contrasenia.getUsuario() == null) {
@@ -43,11 +47,16 @@ public class ContraseniasService {
         if (contrasenia.getContrasenia() == null || contrasenia.getContrasenia().isEmpty()) {
             throw new IllegalArgumentException("La contraseña es requerida");
         }
+        
+        // Encriptar la contraseña antes de guardar
+        String contraseniaEncriptada = encriptacionUtil.encriptarContrasenia(contrasenia.getContrasenia());
+        contrasenia.setContrasenia(contraseniaEncriptada);
+        
         return contraseniasRepository.save(contrasenia);
     }
 
     /**
-     * Actualizar una contraseña existente.
+     * Actualizar una contraseña existente (encriptará la nueva contraseña).
      */
     public Contrasenias actualizar(Integer id, Contrasenias contraseniaActualizada) {
         Optional<Contrasenias> contraseniaExistente = contraseniasRepository.findById(id);
@@ -59,7 +68,9 @@ public class ContraseniasService {
                 contrasenia.setUsuario(contraseniaActualizada.getUsuario());
             }
             if (contraseniaActualizada.getContrasenia() != null) {
-                contrasenia.setContrasenia(contraseniaActualizada.getContrasenia());
+                // Encriptar la contraseña antes de guardar
+                String contraseniaEncriptada = encriptacionUtil.encriptarContrasenia(contraseniaActualizada.getContrasenia());
+                contrasenia.setContrasenia(contraseniaEncriptada);
             }
             
             return contraseniasRepository.save(contrasenia);

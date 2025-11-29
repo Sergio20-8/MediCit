@@ -34,6 +34,6 @@ public class Contrasenias {
     @JoinColumn(name = "usuario_id", referencedColumnName = "id_usuario", nullable = false)
     private Usuarios usuario;
 
-    @Column(name = "contrasenia", length = 25, nullable = false)
+    @Column(name = "contrasenia", length = 255, nullable = false)
     private String contrasenia;
 }
