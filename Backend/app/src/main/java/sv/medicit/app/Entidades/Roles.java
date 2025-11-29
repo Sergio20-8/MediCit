@@ -42,14 +42,14 @@ public class Roles {
     private String descripcion;
 
     // Relación inversa (opcional) - lista de usuarios que referencian este estado
-    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "rol", fetch = FetchType.EAGER)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<Usuarios> usuarios;
 
     // Relación inversa - lista de RolPermisoModulo para este rol
-    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "rol", fetch = FetchType.EAGER)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<RolPermisoModulo> rolesPermisosModulos;

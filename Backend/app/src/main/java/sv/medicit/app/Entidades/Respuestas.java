@@ -30,11 +30,11 @@ public class Respuestas {
     @Column(name = "id_respuesta")
     private Integer idRespuesta;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id_usuario", nullable = false)
     private Usuarios usuario;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pregunta_id", referencedColumnName = "id_pregunta", nullable = false)
     private Preguntas pregunta;
 

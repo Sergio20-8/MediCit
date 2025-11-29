@@ -44,7 +44,7 @@ public class Especialidades {
     private String descripcion;
  
     // Relación ManyToMany con Usuarios (a través de tabla intermedia usuario_especialidad)
-    @ManyToMany(mappedBy = "especialidades", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "especialidades", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Usuarios> usuarios;
 }

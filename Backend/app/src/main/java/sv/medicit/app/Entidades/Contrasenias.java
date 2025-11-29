@@ -30,7 +30,7 @@ public class Contrasenias {
     @Column(name = "id_contrasenia")
     private Integer idContrasenia;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id_usuario", nullable = false)
     private Usuarios usuario;
 

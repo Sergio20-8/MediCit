@@ -41,13 +41,13 @@ public class Estados {
     private String descripcion;
 
     // Relación inversa (opcional) - lista de usuarios que referencian este estado
-    @OneToMany(mappedBy = "estado", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "estado", fetch = FetchType.EAGER)
     
     @JsonIgnore
     private List<Usuarios> usuarios;
 
     // Relación inversa (opcional) - lista de usuarios que referencian este estado
-    @OneToMany(mappedBy = "estado", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "estado", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Citas> citas;
 }

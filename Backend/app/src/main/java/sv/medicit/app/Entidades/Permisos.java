@@ -41,7 +41,7 @@ public class Permisos {
     private String descripcion;
 
     // Relación inversa - lista de RolPermisoModulo para este permiso
-    @OneToMany(mappedBy = "permiso", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "permiso", fetch = FetchType.EAGER)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<RolPermisoModulo> rolesPermisosModulos;

@@ -32,7 +32,7 @@ public class Antecedentes {
     @Column(name = "id_antecedente")
     private Integer idAntecedente;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id_usuario", nullable = false)
     private Usuarios usuario;
 

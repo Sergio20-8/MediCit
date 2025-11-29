@@ -30,7 +30,7 @@ public class Correos {
     @Column(name = "id_correo")
     private Integer idCorreo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id_usuario", nullable = false)
     private Usuarios usuario;
 

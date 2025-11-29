@@ -32,18 +32,18 @@ public class RolPermisoModulo {
     private Integer idRolPermisoModulo;
 
     // Relación ManyToOne con Roles
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_rol", referencedColumnName = "id_rol", nullable = false)
     private Roles rol;
 
     // Relación ManyToOne con Permisos
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_permiso", referencedColumnName = "id_permiso", nullable = false)
     private Permisos permiso;
 
 
     // Relación ManyToOne con Modulos
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo", nullable = false)
     private Modulos modulo;
 }
