@@ -232,7 +232,7 @@ public class UsuariosService {
 
         // Opcional: verificar que el usuario sea médico (asumimos que el nombre del rol esté en el campo "nombreRol")
         if (usuario.getRol() == null || usuario.getRol().getNombreRol() == null ||
-            !usuario.getRol().getNombreRol().equalsIgnoreCase("medico")) {
+            !usuario.getRol().getNombreRol().equalsIgnoreCase("Medico")) {
             throw new RuntimeException("El usuario no es médico y no puede tener especialidades");
         }
 
