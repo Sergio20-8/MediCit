@@ -12,5 +12,11 @@ import sv.medicit.app.Entidades.Contrasenias;
 @Repository
 public interface ContraseniasRepository extends JpaRepository<Contrasenias, Integer> {
     
-    // Métodos personalizados (opcional, se pueden agregar según necesidad)
+    /**
+     * Busca la contraseña de un usuario específico.
+     * 
+     * @param usuario El usuario
+     * @return La contraseña del usuario, o null si no existe
+     */
+    Contrasenias findByUsuario(sv.medicit.app.Entidades.Usuarios usuario);
 }

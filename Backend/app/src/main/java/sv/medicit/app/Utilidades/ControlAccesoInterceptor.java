@@ -21,57 +21,65 @@ public class ControlAccesoInterceptor implements HandlerInterceptor {
 
     /**
      * Se ejecuta antes de que se procese la petición.
-     * Verifica si el usuario tiene permisos para acceder al recurso.
+     * Valida que el usuario tenga una sesión activa.
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) 
             throws Exception {
         
-        // Obtener la sesión del usuario
+        // Obtener la ruta de la petición
+        String requestPath = request.getRequestURI();
+        
+        // Rutas públicas que no requieren autenticación
+        if (esRutaPublica(requestPath)) {
+            return true;
+        }
+        
+        // Obtener la sesión
         HttpSession session = request.getSession(false);
         
-        // Si no hay sesión, permitir (será manejado por autenticación)
+        // Si no hay sesión, retornar 401
         if (session == null) {
-            return true;
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Sesión expirada o no existe");
+            return false;
         }
         
         // Obtener el usuario de la sesión
         Usuarios usuario = (Usuarios) session.getAttribute("usuarioLogueado");
         
-        // Si no hay usuario logueado, denegar acceso
+        // Si no hay usuario logueado, retornar 401
         if (usuario == null) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Usuario no autenticado");
             return false;
         }
         
-        // Obtener el módulo solicitado de la URL
-        String requestPath = request.getRequestURI();
-        String moduloSolicitado = extraerModuloDeLaURL(requestPath);
+        // Log de acceso (opcional)
+        System.out.println("[ACCESO] Usuario: " + usuario.getNombreUsuario() + 
+                         " | Método: " + request.getMethod() + 
+                         " | Ruta: " + requestPath);
         
-        // Si no se puede extraer el módulo, permitir (no es crítico)
-        if (moduloSolicitado == null) {
-            return true;
-        }
-        
-        // Verificar si el usuario tiene acceso al módulo
-        // (Aquí se necesitaría un mapping entre módulos y sus IDs)
-        // Por ahora, se retorna true, pero en producción se validaría
-        
+        // Permitir acceso
         return true;
     }
-
+    
     /**
-     * Extrae el nombre del módulo de la URL.
-     * Ejemplo: "/api/usuarios" → "usuarios"
+     * Verifica si una ruta es pública (no requiere autenticación).
      * 
      * @param requestPath Ruta de la petición
-     * @return Nombre del módulo o null
+     * @return true si es pública, false si requiere autenticación
      */
-    private String extraerModuloDeLaURL(String requestPath) {
-        String[] partes = requestPath.split("/");
-        if (partes.length > 2) {
-            return partes[partes.length - 1].toLowerCase();
-        }
-        return null;
+    private boolean esRutaPublica(String requestPath) {
+        // Rutas públicas de autenticación
+        if (requestPath.contains("/api/autenticacion/login")) return true;
+        if (requestPath.contains("/api/autenticacion/logout")) return true;
+        if (requestPath.contains("/api/autenticacion/recuperar-contrasenia")) return true;
+        if (requestPath.contains("/api/autenticacion/preguntas-seguridad")) return true;
+        
+        // Rutas de documentación y health checks (si existen)
+        if (requestPath.contains("/swagger")) return true;
+        if (requestPath.contains("/actuator/health")) return true;
+        
+        return false;
     }
+
 }
