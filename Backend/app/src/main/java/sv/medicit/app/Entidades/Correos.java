@@ -34,6 +34,6 @@ public class Correos {
     @JoinColumn(name = "usuario_id", referencedColumnName = "id_usuario", nullable = false)
     private Usuarios usuario;
 
-    @Column(name = "correo", length = 100, nullable = false)
+    @Column(name = "correo", length = 100, nullable = false, unique = true)
     private String correo;
 }

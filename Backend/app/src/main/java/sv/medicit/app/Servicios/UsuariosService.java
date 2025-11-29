@@ -286,17 +286,29 @@ public class UsuariosService {
         if (usuarioExistente.isPresent()) {
             Usuarios usuario = usuarioExistente.get();
             
-            if (usuarioActualizado.getNombreUsuario() != null) {
+            // Validar unicidad de nombreUsuario si está siendo actualizado
+            if (usuarioActualizado.getNombreUsuario() != null && 
+                !usuarioActualizado.getNombreUsuario().equals(usuario.getNombreUsuario())) {
+                if (usuariosRepository.findByNombreUsuario(usuarioActualizado.getNombreUsuario()).isPresent()) {
+                    throw new IllegalArgumentException("El nombre de usuario '" + usuarioActualizado.getNombreUsuario() + "' ya existe");
+                }
                 usuario.setNombreUsuario(usuarioActualizado.getNombreUsuario());
             }
+            
+            // Validar unicidad de DUI si está siendo actualizado
+            if (usuarioActualizado.getDui() != null && 
+                !usuarioActualizado.getDui().equals(usuario.getDui())) {
+                if (usuariosRepository.findByDui(usuarioActualizado.getDui()).isPresent()) {
+                    throw new IllegalArgumentException("El DUI '" + usuarioActualizado.getDui() + "' ya existe");
+                }
+                usuario.setDui(usuarioActualizado.getDui());
+            }
+            
             if (usuarioActualizado.getNombres() != null) {
                 usuario.setNombres(usuarioActualizado.getNombres());
             }
             if (usuarioActualizado.getApellidos() != null) {
                 usuario.setApellidos(usuarioActualizado.getApellidos());
-            }
-            if (usuarioActualizado.getDui() != null) {
-                usuario.setDui(usuarioActualizado.getDui());
             }
             if (usuarioActualizado.getFechaNacimiento() != null) {
                 usuario.setFechaNacimiento(usuarioActualizado.getFechaNacimiento());

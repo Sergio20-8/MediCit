@@ -3,6 +3,8 @@ package sv.medicit.app.Entidades;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,9 +20,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.JoinTable;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,7 +42,7 @@ public class Usuarios {
     @Column(name = "id_usuario")
     private Integer idUsuario;
 
-    @Column(name = "nombre_usuario", length = 15, nullable = false)
+    @Column(name = "nombre_usuario", length = 15, nullable = false, unique = true)
     private String nombreUsuario;
 
     @Column(name = "nombres", length = 35, nullable = false)
@@ -52,27 +51,26 @@ public class Usuarios {
     @Column(name = "apellidos", length = 35, nullable = false)
     private String apellidos;
 
-    @Column(name = "dui", length = 10, nullable = true)
+    @Column(name = "dui", length = 10, nullable = true, unique = true)
     private String dui;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_nacimiento", nullable = false)
     private Date fechaNacimiento;
 
-     
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_rol", referencedColumnName = "id_rol", nullable = false)
-    @JsonManagedReference
     private Roles rol;
 
     // Relación ManyToOne con Estados. La columna en la tabla usuarios se llama `id_estado` y guarda el id (id_estado)
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
-    @JsonManagedReference
     private Estados estado;
 
     // Relación ManyToMany con Especialidades (lado propietario)
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER) 
     @JoinTable(
         name = "Usuario_especialidad",
         joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"),
