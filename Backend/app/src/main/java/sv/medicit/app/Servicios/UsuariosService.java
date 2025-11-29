@@ -19,6 +19,7 @@ import sv.medicit.app.Repositorios.EspecialidadesRepository;
 import sv.medicit.app.Repositorios.EstadosRepository;
 import sv.medicit.app.Repositorios.RolesRepository;
 import sv.medicit.app.Repositorios.UsuariosRepository;
+import sv.medicit.app.Repositorios.CorreosRepository;
 
 /**
  * Servicio para la lógica de negocio de Usuarios.
@@ -38,6 +39,9 @@ public class UsuariosService {
 
     @Autowired
     private EspecialidadesRepository especialidadesRepository;
+
+    @Autowired
+    private CorreosRepository correosRepository;
 
     @Autowired
     private ContraseniasService contraseniasService;
@@ -79,6 +83,19 @@ public class UsuariosService {
         if (usuario.getNombres() == null || usuario.getNombres().isEmpty()) {
             throw new IllegalArgumentException("Los nombres son requeridos");
         }
+        
+        // Validar unicidad de nombreUsuario
+        if (usuariosRepository.findByNombreUsuario(usuario.getNombreUsuario()).isPresent()) {
+            throw new IllegalArgumentException("El nombre de usuario '" + usuario.getNombreUsuario() + "' ya existe");
+        }
+        
+        // Validar unicidad de DUI si está presente
+        if (usuario.getDui() != null && !usuario.getDui().isEmpty()) {
+            if (usuariosRepository.findByDui(usuario.getDui()).isPresent()) {
+                throw new IllegalArgumentException("El DUI '" + usuario.getDui() + "' ya existe");
+            }
+        }
+        
         return usuariosRepository.save(usuario);
     }
 
@@ -102,6 +119,23 @@ public class UsuariosService {
         }
         if (usuarioDTO.getCorreo() == null || usuarioDTO.getCorreo().isEmpty()) {
             throw new IllegalArgumentException("El correo es requerido");
+        }
+        
+        // Validar unicidad de nombreUsuario
+        if (usuariosRepository.findByNombreUsuario(usuarioDTO.getNombreUsuario()).isPresent()) {
+            throw new IllegalArgumentException("El nombre de usuario '" + usuarioDTO.getNombreUsuario() + "' ya existe");
+        }
+        
+        // Validar unicidad de DUI si está presente
+        if (usuarioDTO.getDui() != null && !usuarioDTO.getDui().isEmpty()) {
+            if (usuariosRepository.findByDui(usuarioDTO.getDui()).isPresent()) {
+                throw new IllegalArgumentException("El DUI '" + usuarioDTO.getDui() + "' ya existe");
+            }
+        }
+        
+        // Validar unicidad de correo
+        if (correosRepository.findByCorreo(usuarioDTO.getCorreo()).isPresent()) {
+            throw new IllegalArgumentException("El correo '" + usuarioDTO.getCorreo() + "' ya existe");
         }
         
         // Crear usuario base
@@ -195,9 +229,9 @@ public class UsuariosService {
         Usuarios usuario = usuariosRepository.findById(idUsuario)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + idUsuario));
 
-        // Opcional: verificar que el usuario sea médico (asumimos que el nombre del rol esté en el campo "estado")
-        if (usuario.getRol() == null || usuario.getRol().getEstado() == null ||
-            !usuario.getRol().getEstado().equalsIgnoreCase("medico")) {
+        // Opcional: verificar que el usuario sea médico (asumimos que el nombre del rol esté en el campo "nombreRol")
+        if (usuario.getRol() == null || usuario.getRol().getNombreRol() == null ||
+            !usuario.getRol().getNombreRol().equalsIgnoreCase("medico")) {
             throw new RuntimeException("El usuario no es médico y no puede tener especialidades");
         }
 

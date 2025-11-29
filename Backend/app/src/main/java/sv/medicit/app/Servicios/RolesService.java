@@ -24,7 +24,7 @@ public class RolesService {
     }
 
     public Roles crear(Roles rol) {
-        if (rol.getEstado() == null || rol.getEstado().isEmpty()) {
+        if (rol.getNombreRol() == null || rol.getNombreRol().isEmpty()) {
             throw new IllegalArgumentException("El nombre del rol es requerido");
         }
         return rolesRepository.save(rol);
@@ -35,8 +35,8 @@ public class RolesService {
         
         if (rolExistente.isPresent()) {
             Roles rol = rolExistente.get();
-            if (rolActualizado.getEstado() != null) {
-                rol.setEstado(rolActualizado.getEstado());
+            if (rolActualizado.getNombreRol() != null) {
+                rol.setNombreRol(rolActualizado.getNombreRol());
             }
             if (rolActualizado.getDescripcion() != null) {
                 rol.setDescripcion(rolActualizado.getDescripcion());

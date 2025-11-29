@@ -1,5 +1,6 @@
 package sv.medicit.app.Repositorios;
 
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +13,7 @@ import sv.medicit.app.Entidades.Usuarios;
 @Repository
 public interface UsuariosRepository extends JpaRepository<Usuarios, Integer> {
     
-    // Métodos personalizados (opcional, se pueden agregar según necesidad)
-    // Ejemplo: Usuarios findByNombreUsuario(String nombreUsuario);
+    // Métodos personalizados
+    Optional<Usuarios> findByNombreUsuario(String nombreUsuario);
+    Optional<Usuarios> findByDui(String dui);
 }

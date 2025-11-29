@@ -1,5 +1,6 @@
 package sv.medicit.app.Repositorios;
 
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +13,6 @@ import sv.medicit.app.Entidades.Correos;
 @Repository
 public interface CorreosRepository extends JpaRepository<Correos, Integer> {
     
-    // Métodos personalizados (opcional, se pueden agregar según necesidad)
+    // Métodos personalizados
+    Optional<Correos> findByCorreo(String correo);
 }

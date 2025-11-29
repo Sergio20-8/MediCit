@@ -43,6 +43,12 @@ public class CorreosService {
         if (correo.getCorreo() == null || correo.getCorreo().isEmpty()) {
             throw new IllegalArgumentException("El correo es requerido");
         }
+        
+        // Validar unicidad de correo
+        if (correosRepository.findByCorreo(correo.getCorreo()).isPresent()) {
+            throw new IllegalArgumentException("El correo '" + correo.getCorreo() + "' ya existe");
+        }
+        
         return correosRepository.save(correo);
     }
 

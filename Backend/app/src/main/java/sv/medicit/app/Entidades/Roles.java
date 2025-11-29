@@ -10,6 +10,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.FetchType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,10 +33,10 @@ public class Roles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_rol")
-    private Integer idEstado;
+    private Integer idRol;
 
     @Column(name = "nombre_rol", length = 15, nullable = false)
-    private String estado;
+    private String nombreRol;
 
     @Column(name = "descripcion", length = 200, nullable = false)
     private String descripcion;
@@ -43,6 +45,7 @@ public class Roles {
     @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonBackReference
     private List<Usuarios> usuarios;
 
     // Relación inversa - lista de RolPermisoModulo para este rol

@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.FetchType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,11 +46,13 @@ public class Estados {
     @OneToMany(mappedBy = "estado", fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonBackReference
     private List<Usuarios> usuarios;
 
     // Relación inversa (opcional) - lista de usuarios que referencian este estado
     @OneToMany(mappedBy = "estado", fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonBackReference
     private List<Citas> citas;
 }
